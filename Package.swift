@@ -41,7 +41,7 @@ let package = Package(
         .package(url: "https://github.com/amplitude/Amplitude-iOS", from: "8.15.2"),
         .package(url: "https://github.com/mixpanel/mixpanel-swift", from: "4.2.6"),
         .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework", from: "6.13.2"),
-        .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "16.2.1")
+        .package(url: "https://github.com/facebook/facebook-ios-sdk", "16.2.1"..<"20.0.0")
     ],
     targets: [
         .target(
