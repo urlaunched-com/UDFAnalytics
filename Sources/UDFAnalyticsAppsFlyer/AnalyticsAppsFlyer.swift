@@ -32,7 +32,7 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
     ///    return mutableDict
     ///}
     ///```
-    public typealias EventMapper = (_ event: Event, _ params: [String : Any]?) -> (event: any RawRepresentable<String>, params: [String : Any]?)
+    public typealias EventMapper = (_ event: Event, _ params: [String: Any]?) -> (event: any RawRepresentable<String>, params: [String: Any]?)
     public var eventMapper: EventMapper
 
     public init(eventMapper: @escaping EventMapper = { ($0, $1) }) {
@@ -44,7 +44,7 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
     }
     
-    public func logEvent(_ event: Event, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String: Any]) {
         let mappedEvent = eventMapper(event, with)
         appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
     }
@@ -62,8 +62,10 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         appsFlyer.logEvent(kScreenViewEvent, withValues: params)
     }
     
-    public func setUserProperties(_ userInfo: [String : Any], userId: Int) {
-        appsFlyer.customerUserID = String(userId)
+    public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
+        if let userId {
+            appsFlyer.customerUserID = String(userId)
+        }
         appsFlyer.customData = userInfo
     }
     

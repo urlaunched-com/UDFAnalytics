@@ -39,10 +39,10 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
     ///    }
     ///}
     ///```
-    public typealias EventMapper = (_ event: Event, _ params: [String : Any]?) -> (event: AppEvents.Name, params: [AppEvents.ParameterName : Any]?)
+    public typealias EventMapper = (_ event: Event, _ params: [String: Any]?) -> (event: AppEvents.Name, params: [AppEvents.ParameterName : Any]?)
     public var eventMapper: EventMapper
 
-    public typealias UserPropertiesMapper = (_ userProperties: [String : Any]) -> [FBSDKAppEventUserDataType: String]
+    public typealias UserPropertiesMapper = (_ userProperties: [String: Any]) -> [FBSDKAppEventUserDataType: String]
     public var userPropertiesMapper: UserPropertiesMapper
 
     public init(
@@ -64,7 +64,7 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
         facebook.logEvent(mappedEvent.event)
     }
     
-    public func logEvent(_ event: Event, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String: Any]) {
         let mappedEvent = eventMapper(event, nil)
         facebook.logEvent(mappedEvent.event, parameters: mappedEvent.params)
     }
@@ -82,8 +82,10 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
         facebook.logEvent(.init(kScreenViewEvent), parameters: params)
     }
     
-    public func setUserProperties(_ userInfo: [String : Any], userId: Int) {
-        facebook.userID = String(userId)
+    public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
+        if let userId {
+            facebook.userID = String(userId)
+        }
         userPropertiesMapper(userInfo).forEach { tuple in
             facebook.setUserData(tuple.value, forType: tuple.key)
         }

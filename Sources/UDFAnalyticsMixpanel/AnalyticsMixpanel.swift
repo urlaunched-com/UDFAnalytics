@@ -32,14 +32,22 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
     }
     
     public func setName(for screen: Screen, screenClass: String) {
+        mixpanel.registerSuperProperties([kScreenNameParam: screen.name])
         mixpanel.track(event: kScreenViewEvent, properties: [
             kScreenNameParam: screen.name,
             kScreenClassParam: screenClass
         ])
     }
-    
-    public func setUserProperties(_ userInfo: [String : Any], userId: Int) {
-        mixpanel.identify(distinctId: String(userId))
+
+    public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
+        if let userId {
+            mixpanel.identify(distinctId: String(userId))
+        }
+
+        mixpanel.people.set(properties: toMixpanelProperties(userInfo))
+        if let email = userInfo["email"] as? String {
+            mixpanel.people.set(property: "$email", to: email)
+        }
     }
     
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
@@ -58,8 +66,8 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
     
-    public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
-        Mixpanel.initialize(token: "MIXPANEL_TOKEN", trackAutomaticEvents: false)
+    public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        Mixpanel.initialize(token: token, trackAutomaticEvents: trackAutomaticEvents, optOutTrackingByDefault: optOutTrackingByDefault)
     }
 
     private func toMixpanelProperties(_ params: [String: Any]) -> [String: any MixpanelType] {

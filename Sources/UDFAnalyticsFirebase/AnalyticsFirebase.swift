@@ -29,16 +29,18 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
             AnalyticsParameterScreenClass: screenClass
         ]
 
-        FAnalytics.logEvent(EventScreenView, parameters: params)
+        FAnalytics.logEvent(AnalyticsEventScreenView, parameters: params)
     }
 
-    public func logEvent(_ event: Event, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String: Any]) {
         FAnalytics.logEvent(event.rawValue, parameters: with)
     }
 
-    public func setUserProperties(_ userInfo: [String : Any], userId: Int) {
-        FAnalytics.setUserID(String(userId))
-        Crashlytics.crashlytics().setUserID(String(userId))
+    public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
+        if let userId {
+            FAnalytics.setUserID(String(userId))
+            Crashlytics.crashlytics().setUserID(String(userId))
+        }
 
         userInfo.forEach { key, value in
             FAnalytics.setUserProperty("\(value)", forName: key)
@@ -46,7 +48,7 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
     }
 
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
-        let item: [String : Any] = [
+        let item: [String: Any] = [
             AnalyticsParameterItemID: productId,
             AnalyticsParameterItemName: productTitle
         ]
@@ -63,7 +65,7 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
             }
         }
 
-        FAnalytics.logEvent(EventPurchase, parameters: parameters)
+        FAnalytics.logEvent(AnalyticsEventPurchase, parameters: parameters)
     }
 
     public func increment(property: String, by: Double) {

@@ -48,7 +48,7 @@ public extension AnalyticsComposite {
         components.forEach { $0.logEvent(event) }
     }
 
-    func logEvent(_ event: Event, with: [String : Any]) {
+    func logEvent(_ event: Event, with: [String: Any]) {
         components.forEach { $0.logEvent(event, with: with) }
     }
 
@@ -60,7 +60,7 @@ public extension AnalyticsComposite {
         components.forEach { $0.setName(for: screen, screenClass: screenClass)}
     }
 
-    func setUserProperties(_ userInfo: [String : Any], userId: Int) {
+    func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
         components.forEach { $0.setUserProperties(userInfo, userId: userId) }
     }
 
