@@ -10,9 +10,8 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
 
     private var amplitude: Amplitude { .instance() }
 
-    public init(apiKey: String) {
-        amplitude.defaultTracking.sessions = true
-        amplitude.defaultTracking.deepLinks = true
+    public init(apiKey: String, tracking: (inout AMPDefaultTrackingOptions) -> Void = { _ in }) {
+        tracking(&amplitude.defaultTracking)
         amplitude.initializeApiKey(apiKey)
         amplitude.logEvent("app_start")
     }
