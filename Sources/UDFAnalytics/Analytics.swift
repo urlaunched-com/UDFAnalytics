@@ -33,3 +33,9 @@ public protocol Analytics<Event> {
         _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     )
 }
+
+public extension Analytics {
+    func setUserProperties(_ userInfo: [String: Any]) {
+        setUserProperties(userInfo, userId: nil)
+    }
+}
