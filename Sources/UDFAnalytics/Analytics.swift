@@ -15,11 +15,11 @@ public protocol RevenueProduct {
     var params: [String: Any] { get }
 }
 
-public protocol Analytics<AnalyticsEvent> {
-    associatedtype AnalyticsEvent
+public protocol Analytics<Event> {
+    associatedtype Event
 
-    func logEvent(_ event: AnalyticsEvent)
-    func logEvent(_ event: AnalyticsEvent, with: [String: Any])
+    func logEvent(_ event: Event)
+    func logEvent(_ event: Event, with: [String: Any])
     func increment(property: String, by: Double)
 
     func setName(for screen: Screen, screenClass: String)
