@@ -32,21 +32,21 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
     ///    return mutableDict
     ///}
     ///```
-    public typealias EventMapper = (_ event: Event, _ params: [String: Any]?) -> (event: any RawRepresentable<String>, params: [String: Any]?)
+    public typealias EventMapper = (_ event: Event, _ params: [String: Any]?) -> (event: String, params: [String: Any]?)
     public var eventMapper: EventMapper
 
-    public init(eventMapper: @escaping EventMapper = { ($0, $1) }) {
+    public init(eventMapper: @escaping EventMapper = { ($0.rawValue, $1) }) {
         self.eventMapper = eventMapper
     }
 
     public func logEvent(_ event: Event) {
         let mappedEvent = eventMapper(event, nil)
-        appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
+        appsFlyer.logEvent(mappedEvent.event, withValues: mappedEvent.params)
     }
     
     public func logEvent(_ event: Event, with: [String: Any]) {
         let mappedEvent = eventMapper(event, with)
-        appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
+        appsFlyer.logEvent(mappedEvent.event, withValues: mappedEvent.params)
     }
     
     public func increment(property: String, by: Double) {
