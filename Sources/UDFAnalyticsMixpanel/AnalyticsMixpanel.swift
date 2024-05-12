@@ -6,7 +6,7 @@ import class AppTrackingTransparency.ATTrackingManager
 import class UIKit.UIApplication
 import Mixpanel
 
-public struct AnalyticsMixpanel<AnalyticsEvent: RawRepresentable>: UDFAnalytics.Analytics where AnalyticsEvent.RawValue == String {
+public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
     public let token: String
     public let trackAutomaticEvents: Bool
     public let optOutTrackingByDefault: Bool
@@ -19,11 +19,11 @@ public struct AnalyticsMixpanel<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
         self.optOutTrackingByDefault = optOutTrackingByDefault
     }
 
-    public func logEvent(_ event: AnalyticsEvent) {
+    public func logEvent(_ event: Event) {
         mixpanel.track(event: event.rawValue)
     }
     
-    public func logEvent(_ event: AnalyticsEvent, with: [String: Any]) {
+    public func logEvent(_ event: Event, with: [String: Any]) {
         mixpanel.track(event: event.rawValue, properties: toMixpanelProperties(with))
     }
     

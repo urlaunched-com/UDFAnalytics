@@ -6,7 +6,7 @@ import FacebookCore
 import class AppTrackingTransparency.ATTrackingManager
 import class UIKit.UIApplication
 
-public struct AnalyticsFacebook<AnalyticsEvent: RawRepresentable>: UDFAnalytics.Analytics where AnalyticsEvent.RawValue == String {
+public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
 
     private var facebook: AppEvents { .shared }
 
@@ -39,7 +39,7 @@ public struct AnalyticsFacebook<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
     ///    }
     ///}
     ///```
-    public typealias EventMapper = (_ event: AnalyticsEvent, _ params: [String : Any]?) -> (event: AppEvents.Name, params: [AppEvents.ParameterName : Any]?)
+    public typealias EventMapper = (_ event: Event, _ params: [String : Any]?) -> (event: AppEvents.Name, params: [AppEvents.ParameterName : Any]?)
     public var eventMapper: EventMapper
 
     public typealias UserPropertiesMapper = (_ userProperties: [String : Any]) -> [FBSDKAppEventUserDataType: String]
@@ -59,12 +59,12 @@ public struct AnalyticsFacebook<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
         self.eventMapper = eventMapper
     }
 
-    public func logEvent(_ event: AnalyticsEvent) {
+    public func logEvent(_ event: Event) {
         let mappedEvent = eventMapper(event, nil)
         facebook.logEvent(mappedEvent.event)
     }
     
-    public func logEvent(_ event: AnalyticsEvent, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String : Any]) {
         let mappedEvent = eventMapper(event, nil)
         facebook.logEvent(mappedEvent.event, parameters: mappedEvent.params)
     }

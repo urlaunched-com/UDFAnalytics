@@ -9,7 +9,7 @@ import class AppTrackingTransparency.ATTrackingManager
 
 private typealias FAnalytics = FirebaseAnalytics.Analytics
 
-public struct AnalyticsFirebase<AnalyticsEvent: RawRepresentable>: UDFAnalytics.Analytics where AnalyticsEvent.RawValue == String {
+public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
 
     public init() {
         if !ProcessInfo.processInfo.xcTest {
@@ -19,7 +19,7 @@ public struct AnalyticsFirebase<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
         }
     }
 
-    public func logEvent(_ event: AnalyticsEvent) {
+    public func logEvent(_ event: Event) {
         FAnalytics.logEvent(event.rawValue, parameters: nil)
     }
 
@@ -29,10 +29,10 @@ public struct AnalyticsFirebase<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
             AnalyticsParameterScreenClass: screenClass
         ]
 
-        FAnalytics.logEvent(AnalyticsEventScreenView, parameters: params)
+        FAnalytics.logEvent(EventScreenView, parameters: params)
     }
 
-    public func logEvent(_ event: AnalyticsEvent, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String : Any]) {
         FAnalytics.logEvent(event.rawValue, parameters: with)
     }
 
@@ -63,7 +63,7 @@ public struct AnalyticsFirebase<AnalyticsEvent: RawRepresentable>: UDFAnalytics.
             }
         }
 
-        FAnalytics.logEvent(AnalyticsEventPurchase, parameters: parameters)
+        FAnalytics.logEvent(EventPurchase, parameters: parameters)
     }
 
     public func increment(property: String, by: Double) {

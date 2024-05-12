@@ -5,7 +5,7 @@ import AppsFlyerLib
 import class AppTrackingTransparency.ATTrackingManager
 import class UIKit.UIApplication
 
-public struct AnalyticsAppsFlyer<AnalyticsEvent: RawRepresentable>: UDFAnalytics.Analytics where AnalyticsEvent.RawValue == String {
+public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
     private var appsFlyer: AppsFlyerLib { .shared() }
     
     ///AppsFlyer events mapper
@@ -32,19 +32,19 @@ public struct AnalyticsAppsFlyer<AnalyticsEvent: RawRepresentable>: UDFAnalytics
     ///    return mutableDict
     ///}
     ///```
-    public typealias EventMapper = (_ event: AnalyticsEvent, _ params: [String : Any]?) -> (event: any RawRepresentable<String>, params: [String : Any]?)
+    public typealias EventMapper = (_ event: Event, _ params: [String : Any]?) -> (event: any RawRepresentable<String>, params: [String : Any]?)
     public var eventMapper: EventMapper
 
     public init(eventMapper: @escaping EventMapper = { ($0, $1) }) {
         self.eventMapper = eventMapper
     }
 
-    public func logEvent(_ event: AnalyticsEvent) {
+    public func logEvent(_ event: Event) {
         let mappedEvent = eventMapper(event, nil)
         appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
     }
     
-    public func logEvent(_ event: AnalyticsEvent, with: [String : Any]) {
+    public func logEvent(_ event: Event, with: [String : Any]) {
         let mappedEvent = eventMapper(event, with)
         appsFlyer.logEvent(mappedEvent.event.rawValue, withValues: mappedEvent.params)
     }

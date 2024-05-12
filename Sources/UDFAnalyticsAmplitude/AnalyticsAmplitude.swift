@@ -6,7 +6,7 @@ import Amplitude
 import class AppTrackingTransparency.ATTrackingManager
 import class UIKit.UIApplication
 
-public struct AnalyticsAmplitude<AnalyticsEvent: RawRepresentable>: Analytics where AnalyticsEvent.RawValue == String {
+public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event.RawValue == String {
 
     private var amplitude: Amplitude { .instance() }
 
@@ -17,7 +17,7 @@ public struct AnalyticsAmplitude<AnalyticsEvent: RawRepresentable>: Analytics wh
         amplitude.logEvent("app_start")
     }
 
-    public func logEvent(_ event: AnalyticsEvent) {
+    public func logEvent(_ event: Event) {
         amplitude.logEvent(event.rawValue)
     }
 
@@ -28,7 +28,7 @@ public struct AnalyticsAmplitude<AnalyticsEvent: RawRepresentable>: Analytics wh
         ])
     }
 
-    public func logEvent(_ event: AnalyticsEvent, with: [String: Any]) {
+    public func logEvent(_ event: Event, with: [String: Any]) {
         amplitude.logEvent(event.rawValue, withEventProperties: with)
     }
 
