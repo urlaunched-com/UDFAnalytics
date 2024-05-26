@@ -21,15 +21,14 @@ public struct AnalyticsComposite<Event>: Reducible, Analytics {
 
     public func reduce(_ action: some Action) {
         switch action {
-            //TODO: Add after release UDF v1.4.5
-//        case is Actions.ApplicationDidBecomeActive:
-//            composite.applicationDidBecomeActive()
-//
-//        case let action as Actions.ApplicationDidLaunchWithOptions:
-//            composite.applicationDidLaunchWithOptions(application: action.application, action.launchOptions)
-//
-//        case let action as Actions.DidUpdateATTrackingStatus:
-//            composite.setupTracking(with: action.status)
+        case is Actions.ApplicationDidBecomeActive:
+            components.forEach { $0.applicationDidBecomeActive() }
+
+        case let action as Actions.ApplicationDidLaunchWithOptions:
+            components.forEach { $0.applicationDidLaunchWithOptions(application: action.application, action.launchOptions) }
+
+        case let action as Actions.DidUpdateATTrackingStatus:
+            components.forEach { $0.setupTracking(with: action.status) }
 
         default:
             break
