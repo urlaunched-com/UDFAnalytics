@@ -15,7 +15,7 @@ public protocol RevenueProduct {
     var params: [String: Any] { get }
 }
 
-public protocol Analytics<Event> {
+public protocol Analytics {
     associatedtype Event
 
     func logEvent(_ event: Event)

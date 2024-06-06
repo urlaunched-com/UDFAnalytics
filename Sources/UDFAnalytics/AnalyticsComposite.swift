@@ -5,17 +5,13 @@ import class AppTrackingTransparency.ATTrackingManager
 import class UIKit.UIApplication
 
 public struct AnalyticsComposite<Event>: Reducible, Analytics {
-    private var components: [any Analytics<Event>]
-
-    public init(components: [any Analytics<Event>]) {
-        self.components = components
-    }
+    private var components: [any Analytics]
 
     public init() {
         components = []
     }
 
-    public mutating func addComponent(_ component: some Analytics<Event>) {
+    public mutating func addComponent<T: Analytics>(_ component: T) where T.Event == Event {
         components.append(component)
     }
 
@@ -45,11 +41,23 @@ public struct AnalyticsComposite<Event>: Reducible, Analytics {
 public extension AnalyticsComposite {
 
     func logEvent(_ event: Event) {
-        components.forEach { $0.logEvent(event) }
+        components.forEach {
+            _logEvent(event, to: $0)
+        }
+    }
+
+    func _logEvent<T: Analytics, Event>(_ event: Event, to component: T) {
+        component.logEvent(event as! T.Event)
     }
 
     func logEvent(_ event: Event, with: [String: Any]) {
-        components.forEach { $0.logEvent(event, with: with) }
+        components.forEach {
+            _logEvent(event, to: $0, with: with)
+        }
+    }
+
+    func _logEvent<T: Analytics, Event>(_ event: Event, to component: T, with: [String: Any]) {
+        component.logEvent(event as! T.Event, with: with)
     }
 
     func increment(property: String, by: Double) {
