@@ -23,13 +23,19 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         FAnalytics.logEvent(event.rawValue, parameters: nil)
     }
 
-    public func setName(for screen: Screen, screenClass: String) {
-        let params = [
+    public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        var properties: [String: Any] = [
             AnalyticsParameterScreenName: screen.name,
             AnalyticsParameterScreenClass: screenClass
         ]
 
-        FAnalytics.logEvent(AnalyticsEventScreenView, parameters: params)
+        if let with {
+            with.forEach { tuple in
+                properties[tuple.key] = tuple.value
+            }
+        }
+
+        FAnalytics.logEvent(AnalyticsEventScreenView, parameters: properties)
     }
 
     public func logEvent(_ event: Event, with: [String: Any]) {

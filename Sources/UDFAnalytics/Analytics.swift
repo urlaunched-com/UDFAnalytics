@@ -22,7 +22,7 @@ public protocol Analytics {
     func logEvent(_ event: Event, with: [String: Any])
     func increment(property: String, by: Double)
 
-    func setName(for screen: Screen, screenClass: String)
+    func setName(for screen: Screen, screenClass: String, with: [String: Any]?)
     func setUserProperties(_ userInfo: [String: Any], userId: Int?)
     func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String)
 

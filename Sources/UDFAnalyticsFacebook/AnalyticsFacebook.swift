@@ -72,16 +72,22 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
     public func increment(property: String, by: Double) {
         //do nothing
     }
-    
-    public func setName(for screen: Screen, screenClass: String) {
-        let params: [AppEvents.ParameterName: Any] = [
+
+    public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        var properties: [AppEvents.ParameterName: Any] = [
             .init(kScreenNameParam): screen.name,
             .init(kScreenClassParam): screenClass
         ]
 
-        facebook.logEvent(.init(kScreenViewEvent), parameters: params)
+        if let with {
+            with.forEach { tuple in
+                properties[.init(tuple.key)] = tuple.value
+            }
+        }
+
+        facebook.logEvent(.init(kScreenViewEvent), parameters: properties)
     }
-    
+
     public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
         if let userId {
             facebook.userID = String(userId)

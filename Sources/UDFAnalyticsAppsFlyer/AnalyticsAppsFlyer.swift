@@ -53,13 +53,19 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         //do nothing
     }
 
-    public func setName(for screen: Screen, screenClass: String) {
-        let params = [
+    public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        var properties: [String: Any] = [
             kScreenNameParam: screen.name,
             kScreenClassParam: screenClass
         ]
 
-        appsFlyer.logEvent(kScreenViewEvent, withValues: params)
+        if let with {
+            with.forEach { tuple in
+                properties[tuple.key] = tuple.value
+            }
+        }
+
+        appsFlyer.logEvent(kScreenViewEvent, withValues: properties)
     }
     
     public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {

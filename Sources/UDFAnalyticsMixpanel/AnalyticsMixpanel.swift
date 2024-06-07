@@ -31,6 +31,24 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         mixpanel.people.increment(property: property, by: by)
     }
     
+    public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        var properties: [String: MixpanelType] = [
+            kScreenNameParam: screen.name,
+            kScreenClassParam: screenClass
+        ]
+
+        if let with {
+            with.forEach { tuple in
+                if let mixpanelValue = tuple.value as? MixpanelType {
+                    properties[tuple.key] = mixpanelValue
+                }
+            }
+        }
+
+        mixpanel.registerSuperProperties([kScreenNameParam: screen.name])
+        mixpanel.track(event: kScreenViewEvent, properties: properties)
+    }
+
     public func setName(for screen: Screen, screenClass: String) {
         mixpanel.registerSuperProperties([kScreenNameParam: screen.name])
         mixpanel.track(event: kScreenViewEvent, properties: [
