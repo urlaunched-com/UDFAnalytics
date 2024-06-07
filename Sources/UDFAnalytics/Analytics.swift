@@ -22,7 +22,7 @@ public protocol Analytics<Event> {
     func logEvent(_ event: Event, with: [String: Any])
     func increment(property: String, by: Double)
 
-    func setName(for screen: Screen, screenClass: String)
+    func setName(for screen: Screen, screenClass: String, with: [String: Any]?)
     func setUserProperties(_ userInfo: [String: Any], userId: Int?)
     func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String)
 
@@ -37,5 +37,9 @@ public protocol Analytics<Event> {
 public extension Analytics {
     func setUserProperties(_ userInfo: [String: Any]) {
         setUserProperties(userInfo, userId: nil)
+    }
+
+    func setName(for screen: Screen, screenClass: String) {
+        setName(for: screen, screenClass: screenClass, with: nil)
     }
 }

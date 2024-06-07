@@ -20,11 +20,19 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         amplitude.logEvent(event.rawValue)
     }
 
-    public func setName(for screen: Screen, screenClass: String) {
-        amplitude.logEvent(kScreenViewEvent, withEventProperties: [
+    public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        var properties: [String: Any] = [
             kScreenNameParam: screen.name,
             kScreenClassParam: screenClass
-        ])
+        ]
+
+        if let with {
+            with.forEach { tuple in
+                properties[tuple.key] = tuple.value
+            }
+        }
+
+        amplitude.logEvent(kScreenViewEvent, withEventProperties: properties)
     }
 
     public func logEvent(_ event: Event, with: [String: Any]) {

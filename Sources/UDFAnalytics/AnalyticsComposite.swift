@@ -55,8 +55,8 @@ public extension AnalyticsComposite {
         components.forEach { $0.increment(property: property, by: by) }
     }
 
-    func setName(for screen: Screen, screenClass: String) {
-        components.forEach { $0.setName(for: screen, screenClass: screenClass)}
+    func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
+        components.forEach { $0.setName(for: screen, screenClass: screenClass, with: with) }
     }
 
     func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
