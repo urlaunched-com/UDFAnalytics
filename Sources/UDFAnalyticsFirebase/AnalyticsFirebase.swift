@@ -11,13 +11,7 @@ private typealias FAnalytics = FirebaseAnalytics.Analytics
 
 public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
 
-    public init() {
-        if !ProcessInfo.processInfo.xcTest {
-            let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!
-            let options = FirebaseOptions(contentsOfFile: filePath)
-            FirebaseApp.configure(options: options!)
-        }
-    }
+    public init() {}
 
     public func logEvent(_ event: Event) {
         FAnalytics.logEvent(event.rawValue, parameters: nil)
@@ -90,6 +84,10 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
-        //do nothing
+        if !ProcessInfo.processInfo.xcTest {
+            let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!
+            let options = FirebaseOptions(contentsOfFile: filePath)
+            FirebaseApp.configure(options: options!)
+        }
     }
 }
