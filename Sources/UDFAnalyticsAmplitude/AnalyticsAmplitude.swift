@@ -51,9 +51,7 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         revenue.setProductIdentifier(productId)
         revenue.setEventProperties(["name": productTitle])
         if let productItem {
-            productItem.params.forEach { tuple in
-                revenue.setEventProperties([tuple.key: tuple.value])
-            }
+            revenue.setEventProperties(productItem.params)
         }
         revenue.setPrice(value)
         amplitude.logRevenueV2(revenue)
