@@ -49,12 +49,12 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
         let revenue = AMPRevenue()
         revenue.setProductIdentifier(productId)
-        revenue.setEventProperties(["name": productTitle])
+        var params: [String: Any] = ["item_name": productTitle, "currency": currency]
         if let productItem {
-            productItem.params.forEach { tuple in
-                revenue.setEventProperties([tuple.key: tuple.value])
-            }
+            params.merge(productItem.params) { current, _ in current }
         }
+        
+        revenue.setEventProperties(params)
         revenue.setPrice(value)
         amplitude.logRevenueV2(revenue)
     }
