@@ -48,10 +48,10 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
 
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
         let revenue = AMPRevenue()
-        revenue.setProductIdentifier(productId)        
+        revenue.setProductIdentifier(productId)
+        var params: [String: Any] = ["name": productTitle]
         if let productItem {
-            var params = productItem.params
-            params.merge(["name": productTitle]) { current, _ in current }
+            params.merge(productItem.params) { current, _ in current }
             revenue.setEventProperties(params)
         }
         revenue.setPrice(value)
