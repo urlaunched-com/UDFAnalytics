@@ -52,8 +52,9 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         var params: [String: Any] = ["name": productTitle]
         if let productItem {
             params.merge(productItem.params) { current, _ in current }
-            revenue.setEventProperties(params)
         }
+        
+        revenue.setEventProperties(params)
         revenue.setPrice(value)
         amplitude.logRevenueV2(revenue)
     }
