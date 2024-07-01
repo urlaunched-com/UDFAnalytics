@@ -121,9 +121,8 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
     
+    @MainActor
     public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
-        DispatchQueue.main.async {
-            ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-        }
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 }

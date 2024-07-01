@@ -71,12 +71,12 @@ public extension AnalyticsComposite {
 
     //TODO: Will be deprecated after the release of UDF v1.4.5
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus) {
-        components.forEach { $0.setupTracking(with: status) }
+//        components.forEach { $0.setupTracking(with: status) }
     }
 
     //TODO: Will be deprecated after the release of UDF v1.4.5
     func applicationDidBecomeActive() {
-        components.forEach { $0.applicationDidBecomeActive() }
+//        components.forEach { $0.applicationDidBecomeActive() }
     }
 
     //TODO: Will be deprecated after the release of UDF v1.4.5
@@ -84,6 +84,6 @@ public extension AnalyticsComposite {
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
-        components.forEach { $0.applicationDidLaunchWithOptions(application: application, launchOptions) }
+//        components.forEach { $0.applicationDidLaunchWithOptions(application: application, launchOptions) }
     }
 }

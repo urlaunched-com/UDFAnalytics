@@ -95,10 +95,9 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         //do nothing
     }
     
+    @MainActor
     public func applicationDidBecomeActive() {
-        DispatchQueue.main.async {
-            appsFlyer.start()
-        }
+        appsFlyer.start()
     }
     
     public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {

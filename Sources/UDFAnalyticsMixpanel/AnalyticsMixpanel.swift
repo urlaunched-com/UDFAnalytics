@@ -76,6 +76,7 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
     
+    @MainActor
     public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         Mixpanel.initialize(token: token, trackAutomaticEvents: trackAutomaticEvents, optOutTrackingByDefault: optOutTrackingByDefault)
     }
