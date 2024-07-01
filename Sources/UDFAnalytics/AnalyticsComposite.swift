@@ -74,18 +74,14 @@ public extension AnalyticsComposite {
         fatalError("use Actions.DidUpdateATTrackingStatus insstead of calling the setupTracking func directly")
     }
 
-    //TODO: Will be deprecated after the release of UDF v1.4.5
     func applicationDidBecomeActive() {
         fatalError("use Actions.ApplicationDidBecomeActive insstead of calling the applicationDidBecomeActive func directly")
-//        components.forEach { $0.applicationDidBecomeActive() }
     }
 
-    //TODO: Will be deprecated after the release of UDF v1.4.5
     func applicationDidLaunchWithOptions(
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
         fatalError("use Actions.ApplicationDidBecomeActive insstead of calling the applicationDidBecomeActive func directly")
-//        components.forEach { $0.applicationDidLaunchWithOptions(application: application, launchOptions) }
     }
 }
