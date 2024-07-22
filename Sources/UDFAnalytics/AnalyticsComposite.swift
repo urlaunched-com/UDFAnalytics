@@ -19,7 +19,6 @@ public struct AnalyticsComposite<Event>: Reducible, Analytics {
         components.append(component)
     }
 
-    @MainActor
     public func reduce(_ action: some Action) {
         switch action {
         case is Actions.ApplicationDidBecomeActive:
