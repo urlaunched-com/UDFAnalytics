@@ -80,7 +80,6 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
 
-    @MainActor
     public func applicationDidLaunchWithOptions(
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?

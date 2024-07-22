@@ -71,7 +71,6 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         //do nothing
     }
 
-    @MainActor
     public func applicationDidLaunchWithOptions(
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
