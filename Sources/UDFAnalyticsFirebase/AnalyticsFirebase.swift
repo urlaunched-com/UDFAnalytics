@@ -85,10 +85,15 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
-        if !ProcessInfo.processInfo.xcTest {
-            let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!
-            let options = FirebaseOptions(contentsOfFile: filePath)
-            FirebaseApp.configure(options: options!)
+        guard !ProcessInfo.processInfo.xcTest else { return }
+        
+        if FirebaseApp.app() == nil {
+            if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+               let options = FirebaseOptions(contentsOfFile: filePath) {
+                FirebaseApp.configure(options: options)
+            } else {
+                FirebaseApp.configure()
+            }
         }
     }
 }
