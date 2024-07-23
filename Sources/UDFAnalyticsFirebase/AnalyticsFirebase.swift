@@ -86,8 +86,8 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
     ) {
         guard !ProcessInfo.processInfo.xcTest else { return }
         
-        DispatchQueue.main.async {
-            if FirebaseApp.app() == nil {
+        if FirebaseApp.app() == nil {
+            DispatchQueue.main.async {
                 if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
                    let options = FirebaseOptions(contentsOfFile: filePath) {
                     FirebaseApp.configure(options: options)

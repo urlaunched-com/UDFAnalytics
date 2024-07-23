@@ -70,17 +70,17 @@ public extension AnalyticsComposite {
     }
 
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus) {
-        fatalError("use Actions.DidUpdateATTrackingStatus insstead of calling the setupTracking func directly")
+        fatalError("use Actions.DidUpdateATTrackingStatus instead of calling the setupTracking func directly")
     }
 
     func applicationDidBecomeActive() {
-        fatalError("use Actions.ApplicationDidBecomeActive insstead of calling the applicationDidBecomeActive func directly")
+        fatalError("use Actions.ApplicationDidBecomeActive instead of calling the applicationDidBecomeActive func directly")
     }
 
     func applicationDidLaunchWithOptions(
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
-        fatalError("use Actions.ApplicationDidBecomeActive insstead of calling the applicationDidBecomeActive func directly")
+        fatalError("use Actions.ApplicationDidLaunchWithOptions instead of calling the applicationDidLaunchWithOptions func directly")
     }
 }
