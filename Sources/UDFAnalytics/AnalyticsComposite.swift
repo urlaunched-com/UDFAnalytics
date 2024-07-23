@@ -69,21 +69,18 @@ public extension AnalyticsComposite {
         }
     }
 
-    //TODO: Will be deprecated after the release of UDF v1.4.5
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus) {
-        components.forEach { $0.setupTracking(with: status) }
+        fatalError("use Actions.DidUpdateATTrackingStatus instead of calling the setupTracking func directly")
     }
 
-    //TODO: Will be deprecated after the release of UDF v1.4.5
     func applicationDidBecomeActive() {
-        components.forEach { $0.applicationDidBecomeActive() }
+        fatalError("use Actions.ApplicationDidBecomeActive instead of calling the applicationDidBecomeActive func directly")
     }
 
-    //TODO: Will be deprecated after the release of UDF v1.4.5
     func applicationDidLaunchWithOptions(
         application: UIApplication,
         _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
     ) {
-        components.forEach { $0.applicationDidLaunchWithOptions(application: application, launchOptions) }
+        fatalError("use Actions.ApplicationDidLaunchWithOptions instead of calling the applicationDidLaunchWithOptions func directly")
     }
 }
