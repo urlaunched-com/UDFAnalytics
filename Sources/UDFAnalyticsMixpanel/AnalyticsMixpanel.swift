@@ -49,11 +49,8 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         mixpanel.track(event: kScreenViewEvent, properties: properties)
     }
 
-    public func setUserProperties(_ userInfo: [String: Any], userId: Int?) {
-        if let userId {
-            mixpanel.identify(distinctId: String(userId))
-        }
-
+    public func setUserProperties(_ userInfo: [String: Any], userId: Int) {
+        mixpanel.identify(distinctId: String(userId))
         mixpanel.people.set(properties: toMixpanelProperties(userInfo))
         if let email = userInfo["email"] as? String {
             mixpanel.people.set(property: "$email", to: email)
