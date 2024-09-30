@@ -68,8 +68,10 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         appsFlyer.logEvent(kScreenViewEvent, withValues: properties)
     }
 
-    public func setUserProperties(_ userInfo: [String: Any], userId: Int) {
-        appsFlyer.customerUserID = String(userId)
+    public func setUserProperties(_ userInfo: [String: Any], userId: String?) {
+        if let userId {
+            appsFlyer.customerUserID = userId
+        }
         appsFlyer.customData = userInfo
     }
     

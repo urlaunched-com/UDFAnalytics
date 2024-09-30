@@ -23,7 +23,7 @@ public protocol Analytics<Event> {
     func increment(property: String, by: Double)
 
     func setName(for screen: Screen, screenClass: String, with: [String: Any]?)
-    func setUserProperties(_ userInfo: [String: Any], userId: Int)
+    func setUserProperties(_ userInfo: [String: Any], userId: String?)
     func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String)
 
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus)    

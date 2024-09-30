@@ -88,8 +88,10 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
         facebook.logEvent(.init(kScreenViewEvent), parameters: properties)
     }
 
-    public func setUserProperties(_ userInfo: [String: Any], userId: Int) {
-        facebook.userID = String(userId)
+    public func setUserProperties(_ userInfo: [String: Any], userId: String?) {
+        if let userId {
+            facebook.userID = userId
+        }
         userPropertiesMapper(userInfo).forEach { tuple in
             facebook.setUserData(tuple.value, forType: tuple.key)
         }

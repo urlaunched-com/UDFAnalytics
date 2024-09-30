@@ -39,8 +39,10 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         amplitude.logEvent(event.rawValue, withEventProperties: with)
     }
 
-    public func setUserProperties(_ userInfo: [String: Any], userId: Int) {
-        amplitude.setUserId(String(userId))
+    public func setUserProperties(_ userInfo: [String: Any], userId: String?) {
+        if let userId {
+            amplitude.setUserId(userId)
+        }
         amplitude.setUserProperties(userInfo)
     }
 

@@ -36,9 +36,11 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         FAnalytics.logEvent(event.rawValue, parameters: with)
     }
 
-    public func setUserProperties(_ userInfo: [String: Any], userId: Int) {
-        FAnalytics.setUserID(String(userId))
-        Crashlytics.crashlytics().setUserID(String(userId))
+    public func setUserProperties(_ userInfo: [String: Any], userId: String?) {
+        if let userId {
+            FAnalytics.setUserID(userId)
+            Crashlytics.crashlytics().setUserID(userId)
+        }
 
         userInfo.forEach { key, value in
             FAnalytics.setUserProperty("\(value)", forName: key)
