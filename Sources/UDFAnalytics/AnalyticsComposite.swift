@@ -2,7 +2,12 @@
 import Foundation
 import UDF
 import class AppTrackingTransparency.ATTrackingManager
-import class UIKit.UIApplication
+
+#if canImport(UIKit)
+import UIKit.UIApplication
+#else
+import AppKit.NSApplication
+#endif
 
 public struct AnalyticsComposite<Event>: Reducible, Analytics {
     private var components: [any Analytics<Event>]
@@ -77,10 +82,7 @@ public extension AnalyticsComposite {
         fatalError("use Actions.ApplicationDidBecomeActive instead of calling the applicationDidBecomeActive func directly")
     }
 
-    func applicationDidLaunchWithOptions(
-        application: UIApplication,
-        _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
-    ) {
+    func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
         fatalError("use Actions.ApplicationDidLaunchWithOptions instead of calling the applicationDidLaunchWithOptions func directly")
     }
 }

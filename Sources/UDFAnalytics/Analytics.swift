@@ -1,7 +1,18 @@
 
 import Foundation
 import class AppTrackingTransparency.ATTrackingManager
-import class UIKit.UIApplication
+
+#if canImport(UIKit)
+import UIKit.UIApplication
+
+public typealias PlatformApplication = UIApplication
+public typealias PlatformLaunchOptions = [UIApplication.LaunchOptionsKey: Any]?
+#else
+import AppKit.NSApplication
+
+public typealias PlatformApplication = NSApplication
+public typealias PlatformLaunchOptions = Notification
+#endif
 
 public let kScreenViewEvent = "screen_view"
 public let kScreenNameParam = "screen_name"
@@ -28,10 +39,7 @@ public protocol Analytics<Event> {
 
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus)    
     func applicationDidBecomeActive()
-    func applicationDidLaunchWithOptions(
-        application: UIApplication,
-        _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    )
+    func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions)
 }
 
 public extension Analytics {

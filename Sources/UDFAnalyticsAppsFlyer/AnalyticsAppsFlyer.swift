@@ -3,7 +3,12 @@ import Foundation
 import UDFAnalytics
 import AppsFlyerLib
 import class AppTrackingTransparency.ATTrackingManager
-import class UIKit.UIApplication
+
+#if canImport(UIKit)
+import UIKit.UIApplication
+#else
+import AppKit.NSApplication
+#endif
 
 public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
     private var appsFlyer: AppsFlyerLib { .shared() }
@@ -101,7 +106,7 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         }
     }
     
-    public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
+    public func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
         //do nothing
     }
 }

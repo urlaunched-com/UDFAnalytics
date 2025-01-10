@@ -4,7 +4,12 @@ import UDF
 import UDFAnalytics
 import Amplitude
 import class AppTrackingTransparency.ATTrackingManager
-import class UIKit.UIApplication
+
+#if canImport(UIKit)
+import UIKit.UIApplication
+#else
+import AppKit.NSApplication
+#endif
 
 public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event.RawValue == String {
 
@@ -71,10 +76,7 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         //do nothing
     }
 
-    public func applicationDidLaunchWithOptions(
-        application: UIApplication,
-        _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
-    ) {
+    public func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
         //do nothing
     }
 }

@@ -3,7 +3,11 @@ import Foundation
 import UDF
 import UDFAnalytics
 import class AppTrackingTransparency.ATTrackingManager
-import class UIKit.UIApplication
+#if canImport(UIKit)
+import UIKit.UIApplication
+#else
+import AppKit.NSApplication
+#endif
 import Mixpanel
 
 public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
@@ -75,8 +79,12 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
     
-    public func applicationDidLaunchWithOptions(application: UIApplication, _ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+    public func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
+        #if canImport(UIKit)
         Mixpanel.initialize(token: token, trackAutomaticEvents: trackAutomaticEvents, optOutTrackingByDefault: optOutTrackingByDefault)
+        #else
+        Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingByDefault)
+        #endif
     }
 
     private func toMixpanelProperties(_ params: [String: Any]) -> [String: any MixpanelType] {

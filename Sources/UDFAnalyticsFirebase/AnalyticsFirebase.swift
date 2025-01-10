@@ -7,6 +7,12 @@ import FirebaseCrashlytics
 import FirebaseCore
 import class AppTrackingTransparency.ATTrackingManager
 
+#if canImport(UIKit)
+import UIKit.UIApplication
+#else
+import AppKit.NSApplication
+#endif
+
 private typealias FAnalytics = FirebaseAnalytics.Analytics
 
 public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics where Event.RawValue == String {
@@ -80,10 +86,7 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         //do nothing
     }
 
-    public func applicationDidLaunchWithOptions(
-        application: UIApplication,
-        _ launchOptions: [UIApplication.LaunchOptionsKey : Any]?
-    ) {
+    public func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
         guard !ProcessInfo.processInfo.xcTest else { return }
         
         if FirebaseApp.app() == nil {
