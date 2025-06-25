@@ -100,4 +100,11 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
             }
         }
     }
+    
+    public static func enableDebugMode() {
+        let args = ProcessInfo.processInfo.arguments + ["-FIRDebugEnabled", "-FIRAnalyticsDebugEnabled"]
+        ProcessInfo.processInfo.setValue(args, forKey: "arguments")
+        UserDefaults.standard.set(true, forKey: "/google/firebase/debug_mode")
+        UserDefaults.standard.set(true, forKey: "/google/measurement/debug_mode")
+    }
 }
