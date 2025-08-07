@@ -16,7 +16,7 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
     private var amplitude: Amplitude
 
     public init(apiKey: String) {
-        amplitude = .init(configuration: Configuration(apiKey: apiKey))
+        amplitude = .init(configuration: Configuration(apiKey: apiKey, autocapture: [.sessions, .appLifecycles, .networkTracking]))
     }
 
     public init(configuration: Configuration) {
