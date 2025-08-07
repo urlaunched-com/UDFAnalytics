@@ -38,7 +38,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Maks-Jago/SwiftUI-UDF", from: "1.4.5"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "11.0.0"),
-        .package(url: "https://github.com/amplitude/Amplitude-iOS", from: "8.15.2"),
+        .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.14.0"),
         .package(url: "https://github.com/mixpanel/mixpanel-swift", from: "4.2.6"),
         .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework", from: "6.13.2"),
         .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "18.0.0")
@@ -62,7 +62,7 @@ let package = Package(
             name: "UDFAnalyticsAmplitude",
             dependencies: [
                 .target(name: "UDFAnalytics"),
-                .product(name: "Amplitude", package: "Amplitude-iOS")
+                .product(name: "AmplitudeSwift", package: "Amplitude-Swift")
             ]
         ),
         .target(
