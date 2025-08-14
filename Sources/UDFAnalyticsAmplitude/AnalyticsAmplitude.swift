@@ -2,7 +2,7 @@
 import Foundation
 import UDF
 import UDFAnalytics
-import Amplitude
+import AmplitudeSwift
 import class AppTrackingTransparency.ATTrackingManager
 
 #if canImport(UIKit)
@@ -13,16 +13,18 @@ import AppKit.NSApplication
 
 public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event.RawValue == String {
 
-    private var amplitude: Amplitude { .instance() }
+    private var amplitude: Amplitude
 
-    public init(apiKey: String, tracking: (inout AMPDefaultTrackingOptions) -> Void = { _ in }) {
-        tracking(&amplitude.defaultTracking)
-        amplitude.initializeApiKey(apiKey)
-        amplitude.logEvent("app_start")
+    public init(apiKey: String) {
+        amplitude = .init(configuration: Configuration(apiKey: apiKey, autocapture: [.sessions, .appLifecycles, .networkTracking]))
+    }
+
+    public init(configuration: Configuration) {
+        amplitude = .init(configuration: configuration)
     }
 
     public func logEvent(_ event: Event) {
-        amplitude.logEvent(event.rawValue)
+        amplitude.track(eventType: event.rawValue)
     }
 
     public func setName(for screen: Screen, screenClass: String, with: [String : Any]?) {
@@ -37,31 +39,34 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
             }
         }
 
-        amplitude.logEvent(kScreenViewEvent, withEventProperties: properties)
+        amplitude.track(eventType: kScreenViewEvent, eventProperties: properties)
     }
 
     public func logEvent(_ event: Event, with: [String: Any]) {
-        amplitude.logEvent(event.rawValue, withEventProperties: with)
+        amplitude.track(eventType: event.rawValue, eventProperties: with)
     }
 
     public func setUserProperties(_ userInfo: [String: Any], userId: String?) {
         if let userId {
-            amplitude.setUserId(userId)
+            amplitude.setUserId(userId: userId)
         }
-        amplitude.setUserProperties(userInfo)
+        amplitude.identity.userProperties = userInfo
     }
 
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
-        let revenue = AMPRevenue()
-        revenue.setProductIdentifier(productId)
-        var params: [String: Any] = ["item_name": productTitle, "currency": currency]
+        let revenue = Revenue()
+        revenue.productId = productId
+
+        var params: [String: Any] = ["item_name": productTitle]
         if let productItem {
             params.merge(productItem.params) { current, _ in current }
         }
-        
-        revenue.setEventProperties(params)
-        revenue.setPrice(value)
-        amplitude.logRevenueV2(revenue)
+
+        revenue.properties = params
+        revenue.price = value.doubleValue
+        revenue.currency = currency
+
+        amplitude.revenue(revenue: revenue)
     }
 
     public func increment(property: String, by: Double) {
