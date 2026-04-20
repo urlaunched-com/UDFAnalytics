@@ -87,7 +87,7 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
     }
 
     public func applicationDidLaunchWithOptions(application: PlatformApplication, _ launchOptions: PlatformLaunchOptions) {
-        guard !ProcessInfo.processInfo.xcTest else { return }
+        guard !ProcessInfo.processInfo.isRunningTests else { return }
         
         if FirebaseApp.app() == nil {
             DispatchQueue.main.async {
