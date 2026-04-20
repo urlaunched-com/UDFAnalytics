@@ -36,7 +36,7 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/Maks-Jago/SwiftUI-UDF", from: "1.4.5"),
+        .package(url: "https://github.com/Maks-Jago/SwiftUI-UDF", from: "1.5.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "11.0.0"),
         .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.14.0"),
         .package(url: "https://github.com/mixpanel/mixpanel-swift", from: "4.2.6"),

@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Maks-Jago/SwiftUI-UDF",
       "state" : {
-        "revision" : "c42139920fe957277e93cf923551f1c15b4ac839",
-        "version" : "1.4.8"
+        "revision" : "86d44caa3d8e53e66158cfc47398959ce2006bcf",
+        "version" : "1.5.0"
       }
     }
   ],
