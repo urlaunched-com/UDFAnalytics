@@ -39,7 +39,7 @@ let package = Package(
         .package(url: "https://github.com/Maks-Jago/SwiftUI-UDF", from: "1.5.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "12.0.0"),
         .package(url: "https://github.com/amplitude/Amplitude-Swift", from: "1.14.0"),
-        .package(url: "https://github.com/mixpanel/mixpanel-swift", from: "4.2.6"),
+        .package(url: "https://github.com/mixpanel/mixpanel-swift", from: "6.3.0"),
         .package(url: "https://github.com/AppsFlyerSDK/AppsFlyerFramework", from: "6.13.2"),
         .package(url: "https://github.com/facebook/facebook-ios-sdk", from: "18.0.0")
     ],
