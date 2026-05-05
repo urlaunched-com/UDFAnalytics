@@ -54,22 +54,22 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
     }
 
     public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
-        let item: [String: Any] = [
+        var item: [String: Any] = [
             AnalyticsParameterItemID: productId,
             AnalyticsParameterItemName: productTitle
         ]
 
-        var parameters: [String: Any] = [
+        if let productItem {
+            productItem.params.forEach { tuple in
+                item[tuple.key] = tuple.value
+            }
+        }
+
+        let parameters: [String: Any] = [
             AnalyticsParameterValue: value,
             AnalyticsParameterCurrency: currency,
             AnalyticsParameterItems: [item]
         ]
-
-        if let productItem {
-            productItem.params.forEach { tuple in
-                parameters[tuple.key] = tuple.value
-            }
-        }
 
         FAnalytics.logEvent(AnalyticsEventPurchase, parameters: parameters)
     }
