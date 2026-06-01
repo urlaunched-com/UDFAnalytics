@@ -68,9 +68,9 @@ public extension AnalyticsComposite {
         components.forEach { $0.setUserProperties(userInfo, userId: userId) }
     }
 
-    func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+    func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
         components.forEach {
-            $0.logRevenue(productId: productId, productTitle: productTitle, productItem: productItem, value: value, currency: currency)
+            $0.logRevenue(productId: productId, productTitle: productTitle, productItem: productItem, value: value, currency: currency, additionalParams: additionalParams)
         }
     }
 

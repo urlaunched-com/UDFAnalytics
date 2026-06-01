@@ -53,7 +53,7 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
         }
     }
 
-    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
         var item: [String: Any] = [
             AnalyticsParameterItemID: productId,
             AnalyticsParameterItemName: productTitle
@@ -65,11 +65,17 @@ public struct AnalyticsFirebase<Event: RawRepresentable>: UDFAnalytics.Analytics
             }
         }
 
-        let parameters: [String: Any] = [
+        var parameters: [String: Any] = [
             AnalyticsParameterValue: value,
             AnalyticsParameterCurrency: currency,
             AnalyticsParameterItems: [item]
         ]
+
+        if let additionalParams {
+            additionalParams.forEach { tuple in
+                parameters[tuple.key] = tuple.value
+            }
+        }
 
         FAnalytics.logEvent(AnalyticsEventPurchase, parameters: parameters)
     }

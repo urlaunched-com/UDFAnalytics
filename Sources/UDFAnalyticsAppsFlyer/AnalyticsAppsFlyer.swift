@@ -80,7 +80,7 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
         appsFlyer.customData = userInfo
     }
     
-    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
         var parameters: [String: Any] = [
             AFEventParamContentId: productId,
             AFEventParamContentType: productTitle,
@@ -93,6 +93,13 @@ public struct AnalyticsAppsFlyer<Event: RawRepresentable>: UDFAnalytics.Analytic
                 parameters[tuple.key] = tuple.value
             }
         }
+
+        if let additionalParams {
+            additionalParams.forEach { tuple in
+                parameters[tuple.key] = tuple.value
+            }
+        }
+
         appsFlyer.logEvent(AFEventPurchase, withValues: parameters)
     }
     

@@ -35,7 +35,7 @@ public protocol Analytics<Event> {
 
     func setName(for screen: Screen, screenClass: String, with: [String: Any]?)
     func setUserProperties(_ userInfo: [String: Any], userId: String?)
-    func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String)
+    func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?)
 
     func setupTracking(with status: ATTrackingManager.AuthorizationStatus)    
     func applicationDidBecomeActive()
