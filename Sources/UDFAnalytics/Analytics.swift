@@ -46,4 +46,9 @@ public extension Analytics {
     func setName(for screen: Screen, screenClass: String) {
         setName(for: screen, screenClass: screenClass, with: nil)
     }
+
+    func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+        logRevenue(productId: productId, productTitle: productTitle, productItem: productItem, value: value, currency: currency, additionalParams: nil)
+    }
+
 }
