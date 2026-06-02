@@ -53,13 +53,19 @@ public struct AnalyticsAmplitude<Event: RawRepresentable>: Analytics where Event
         amplitude.identity.userProperties = userInfo
     }
 
-    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
         let revenue = Revenue()
         revenue.productId = productId
 
         var params: [String: Any] = ["item_name": productTitle]
         if let productItem {
             params.merge(productItem.params) { current, _ in current }
+        }
+
+        if let additionalParams {
+            additionalParams.forEach { tuple in
+                params[tuple.key] = tuple.value
+            }
         }
 
         revenue.properties = params

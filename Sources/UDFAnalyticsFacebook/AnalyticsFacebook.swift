@@ -97,14 +97,23 @@ public struct AnalyticsFacebook<Event: RawRepresentable>: UDFAnalytics.Analytics
         }
     }
     
-    public func logRevenue(productId: String, productTitle: String, productItem: UDFAnalytics.RevenueProduct?, value: NSNumber, currency: String) {
+    public func logRevenue(productId: String, productTitle: String, productItem: UDFAnalytics.RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
+
+        var parameters: [AppEvents.ParameterName: Any] = [
+            AppEvents.ParameterName.contentID: productId,
+            AppEvents.ParameterName.contentType: "product",
+        ]
+
+        if let additionalParams {
+            additionalParams.forEach { tuple in
+                parameters[.init(rawValue: tuple.key)] = tuple.value
+            }
+        }
+
         facebook.logPurchase(
             amount: Double(truncating: value),
             currency: currency,
-            parameters: [
-                AppEvents.ParameterName.contentID: productId,
-                AppEvents.ParameterName.contentType: productTitle
-            ]
+            parameters: parameters
         )
     }
     

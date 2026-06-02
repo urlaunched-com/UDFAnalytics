@@ -63,11 +63,21 @@ public struct AnalyticsMixpanel<Event: RawRepresentable>: UDFAnalytics.Analytics
         }
     }
     
-    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String) {
+    public func logRevenue(productId: String, productTitle: String, productItem: RevenueProduct?, value: NSNumber, currency: String, additionalParams: [String: Any]?) {
+        var params: [String: Any] = [:]
+
         if let productItem {
-            mixpanel.people.trackCharge(amount: value.doubleValue, properties: toMixpanelProperties(productItem.params))
-        } else {
+            params.merge(productItem.params) { current, _ in current }
+        }
+
+        if let additionalParams {
+            params.merge(additionalParams) { current, _ in current }
+        }
+
+        if params.isEmpty {
             mixpanel.people.trackCharge(amount: value.doubleValue)
+        } else {
+            mixpanel.people.trackCharge(amount: value.doubleValue, properties: toMixpanelProperties(params))
         }
     }
 
